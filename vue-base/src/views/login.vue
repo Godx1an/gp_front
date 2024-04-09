@@ -52,7 +52,9 @@ export default {
             center: true,
             offset: 20
           });
-          if (radio.value === '1') {
+          if (formData.value.phone === "18023917238") {
+            router.push('/superAdmin/super')
+          } else if (radio.value === '1') {
             router.push('/user/userInfo');
           } else if (radio.value === '2') {
             router.push('/admin/adminInfo');
@@ -69,6 +71,12 @@ export default {
         // 处理后端返回的数据
       } catch (error) {
         console.error('请求失败:', error);
+        ElMessage.error({
+          message: "系统错误",
+          duration: 3000, // 错误提示显示时间
+          center: true, // 居中显示
+          offset: 20
+        });
       }
     };
     return {

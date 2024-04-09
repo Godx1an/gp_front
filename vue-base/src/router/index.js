@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginVue from '@/views/login.vue'
 import UserLayoutVue from '@/views/user/layout.vue'
 import AdminLayoutVue from '@/views/admin/layout.vue'
+import superAdminLayoutVue from '@/views/superAdmin/layout.vue'
 import UserItemInfo from '@/views/user/item/itemInfo.vue'
 import UserItem1 from '@/views/user/item/item1.vue'
 import AdminItemInfo from '@/views/admin/item/itemInfo.vue'
@@ -14,6 +15,10 @@ import Admin1 from '@/views/admin/admin1.vue'
 import Admin2 from '@/views/admin/admin2.vue'
 import UserInfo from '@/views/user/userInfo.vue'
 import AdminInfo from '@/views/admin/adminInfo.vue'
+import Super from '@/views/superAdmin/super.vue'
+import AddItem from '@/views/superAdmin/addItem.vue'
+import SuperAdminInfo from '@/views/superAdmin/superAdminInfo.vue'
+import AddSchool from '@/views/superAdmin/addSchool.vue'
 //定义路由关系
 const routes = [
     { path: '/login', component: LoginVue },
@@ -30,6 +35,12 @@ const routes = [
         {path:'/admin/admin2',component:Admin2},
         {path:'/item/adminItemInfo',component:AdminItemInfo},
         {path:'/item/adminItem1',component:AdminItem1},
+    ] },
+    { path: '/', component: superAdminLayoutVue, redirect:'/superAdmin/super',children:[
+        {path:'/superAdmin/super',component:Super},
+        {path:'/superAdmin/addItem',component:AddItem},
+        {path:'/superAdmin/superAdminInfo',component:SuperAdminInfo},
+        {path:'/superAdmin/addSchool',component:AddSchool},
     ] }
 ]
 

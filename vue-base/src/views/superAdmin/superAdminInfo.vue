@@ -55,7 +55,6 @@ export default {
                 .catch(() => {
                     if (!resp.school) { // 检查是否绑定了 resp.school
                         // 在没有绑定时再次显示对话框
-                        openSchool();
                         ElMessage.error({
                             message: "you must bind a school",
                             duration: 3000,
