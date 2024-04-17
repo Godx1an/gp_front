@@ -53,7 +53,7 @@ export default {
             offset: 20
           });
           if (formData.value.phone === "18023917238") {
-            router.push('/superAdmin/super')
+            router.push('/superAdmin/superAdminInfo')
           } else if (radio.value === '1') {
             router.push('/user/userInfo');
           } else if (radio.value === '2') {

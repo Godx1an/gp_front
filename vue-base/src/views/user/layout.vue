@@ -9,11 +9,11 @@ import {
     SwitchButton,
     CaretBottom
 } from '@element-plus/icons-vue'
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus'
-import avatarImage from '@/assets/avatar.jpg'; // 导入头像图片
-const avatar = ref(avatarImage); // 使用 ref 包装头像图片
+
+
 import axios from 'axios';
 const router = useRouter();
 const route = useRoute();
@@ -40,7 +40,28 @@ const infodata = async () => {
     }
 };
 infodata();
+let imgUrl = ref("");
+const avatardata = async () => {
+    // 从sessionStorage获取token
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+        router.push('../login');
+        sessionStorage.setItem("loginMessage", "请先登录！")
+    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    try {
+        await axios.get("http://localhost:8080/user/find_image", {}).then(res => {
+            imgUrl.value = res.data.data
+        });;
+        // 处理后端返回的数据
+    } catch (error) {
+        console.error('请求失败:', error);
+    }
+};
+avatardata();
 
+import avatarImage from '@/assets/avatar.jpg'; // 导入头像图片
+const avatar = ref(avatarImage); // 使用 ref 包装头像图片
 const user = () => {
     router.push('/user/userInfo');
 };
@@ -92,7 +113,7 @@ watch(() => route.path, (newValue, oldValue) => {
                     <el-icon>
                         <Promotion />
                     </el-icon>
-                    <span>文章管理</span>
+                    <span>预约查询</span>
                 </el-menu-item>
                 <el-sub-menu index="user">
                     <template #title>
@@ -129,7 +150,7 @@ watch(() => route.path, (newValue, oldValue) => {
                 <div v-if="resp"><strong>{{ resp.nickname }},你好</strong></div>
                 <el-dropdown placement="bottom-end">
                     <span class="el-dropdown__box">
-                        <el-avatar :src="avatar" />
+                        <el-avatar :src="`data:image/jpeg;base64,${imgUrl}`" />
                         <el-icon>
                             <CaretBottom />
                         </el-icon>
@@ -162,7 +183,7 @@ watch(() => route.path, (newValue, oldValue) => {
         background-color: #232323;
 
         &__logo {
-            height: 120px;
+            height: 100px;
         }
 
         .el-menu {

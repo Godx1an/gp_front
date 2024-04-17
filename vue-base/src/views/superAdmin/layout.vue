@@ -108,18 +108,6 @@ watch(() => route.path, (newValue, oldValue) => {
                         </el-icon>
                         <span>基本资料</span>
                     </el-menu-item>
-                    <el-menu-item index="/admin/admin1">
-                        <el-icon>
-                            <Crop />
-                        </el-icon>
-                        <span>更换头像</span>
-                    </el-menu-item>
-                    <el-menu-item index="/admin/admin2">
-                        <el-icon>
-                            <EditPen />
-                        </el-icon>
-                        <span>重置密码</span>
-                    </el-menu-item>
                 </el-sub-menu>
             </el-menu>
         </el-aside>
@@ -130,7 +118,7 @@ watch(() => route.path, (newValue, oldValue) => {
                 <div v-if="resp"><strong>{{ resp.nickname }},你好</strong></div>
                 <el-dropdown placement="bottom-end">
                     <span class="el-dropdown__box">
-                        <el-avatar :src="avatar" />
+                        <el-avatar>admin</el-avatar>
                         <el-icon>
                             <CaretBottom />
                         </el-icon>

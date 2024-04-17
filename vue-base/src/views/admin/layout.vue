@@ -57,7 +57,6 @@ const handleLogout = () => {
     // 清除本地存储中的 token
     sessionStorage.removeItem('token');
     router.push('/login');
-    console.log(1)
     ElMessage.success({
         message: "退出成功！",
         duration: 3000,
@@ -108,12 +107,6 @@ watch(() => route.path, (newValue, oldValue) => {
                         </el-icon>
                         <span>基本资料</span>
                     </el-menu-item>
-                    <el-menu-item index="/admin/admin1">
-                        <el-icon>
-                            <Crop />
-                        </el-icon>
-                        <span>更换头像</span>
-                    </el-menu-item>
                     <el-menu-item index="/admin/admin2">
                         <el-icon>
                             <EditPen />
@@ -130,7 +123,7 @@ watch(() => route.path, (newValue, oldValue) => {
                 <div v-if="resp"><strong>{{ resp.nickname }},你好</strong></div>
                 <el-dropdown placement="bottom-end">
                     <span class="el-dropdown__box">
-                        <el-avatar :src="avatar" />
+                        <el-avatar>admin</el-avatar>
                         <el-icon>
                             <CaretBottom />
                         </el-icon>
@@ -138,7 +131,6 @@ watch(() => route.path, (newValue, oldValue) => {
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item @click="user" :icon="User">基本资料</el-dropdown-item>
-                            <el-dropdown-item @click="modifyAvatar" :icon="Crop">更换头像</el-dropdown-item>
                             <el-dropdown-item @click="modifyPwd" :icon="EditPen">重置密码</el-dropdown-item>
                             <el-dropdown-item @click="handleLogout" :icon="SwitchButton">退出登录</el-dropdown-item>
                         </el-dropdown-menu>

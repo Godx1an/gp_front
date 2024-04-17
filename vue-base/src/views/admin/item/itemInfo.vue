@@ -1,7 +1,8 @@
 <script setup>
 import {
     Edit,
-    Delete
+    Delete,
+    Select
 } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 const form = reactive({
@@ -23,7 +24,8 @@ const items = ref([]);
 const loading = ref(false)
 const options = ref([]);
 const value = ref(null);
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const remoteMethod = async (query) => {
     if (query === '') {
         options.value = [];
@@ -81,7 +83,6 @@ const handleDelete = (item) => {
         data = { item: item.item };
         submitDelete(data);
     }).catch(() => {
-        console.log('用户点击了取消');
     });
 };
 
@@ -99,7 +100,7 @@ const formatDate = (timeString) => {
 };
 
 //提交删除本校项目
-const submitDelete = async (v) => {
+const submitDelete = async () => {
     const token = sessionStorage.getItem('token');
     if (!token) {
         console.error('Token不存在或为空');
@@ -238,6 +239,13 @@ const submitAdd = async () => {
     }
 };
 
+const adminQueryQueue = (row) =>{
+    sessionStorage.setItem("rowId",row.id)
+    sessionStorage.setItem("rowItem",row.item)
+    sessionStorage.setItem("rowSchool",row.school)
+    sessionStorage.setItem("rowMax",row.max_participants)
+    router.push('/item/adminItem2')
+}
 </script>
 
 <template>
@@ -316,8 +324,9 @@ const submitAdd = async () => {
                     {{ formatDate(row.created_at) }}
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="100">
+            <el-table-column label="操作" width="150">
                 <template #default="{ row }">
+                    <el-button :icon="Select" circle plain type="primary" @click="adminQueryQueue(row)"></el-button>
                     <el-button :icon="Edit" circle plain type="primary" @click="editItem(row)"></el-button>
                     <el-button :icon="Delete" circle plain type="danger" @click="handleDelete(row)"></el-button>
                 </template>

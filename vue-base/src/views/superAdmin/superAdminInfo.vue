@@ -30,9 +30,6 @@ export default {
             try {
                 const response = await axios.post('http://localhost:8080/admin/admin_info', {});
                 resp.value = response.data.data;
-                if (resp.value.school == undefined) {
-                    openSchool()
-                }
             } catch (error) {
                 console.error('请求失败:', error);
             }
@@ -40,35 +37,7 @@ export default {
         infodata();
         let url = '';
         let data = {};
-        const openSchool = (type) => {
-            ElMessageBox.prompt('Please input your content(Can not modify if you submit)', 'modify', {
-                confirmButtonText: 'OK',
-                inputPattern: /^(?!\s*$).+/,
-                inputErrorMessage: 'Invalid parameter',
-            })
-                .then(({ value }) => {
-                    if (type===undefined){
-                        type = "school"
-                    }
-                    submitEdit(value, type);
-                })
-                .catch(() => {
-                    if (!resp.school) { // 检查是否绑定了 resp.school
-                        // 在没有绑定时再次显示对话框
-                        ElMessage.error({
-                            message: "you must bind a school",
-                            duration: 3000,
-                            center: true,
-                            offset: 20
-                        })
-                    } else {
-                        ElMessage({
-                            type: 'info',
-                            message: 'add canceled',
-                        });
-                    }
-                })
-        }
+        
         const open = (type) => {
             ElMessageBox.prompt('Please input your content', 'modify', {
                 confirmButtonText: 'OK',
@@ -175,7 +144,6 @@ export default {
             formatDate,
             submitEdit,
             open,
-            openSchool,
         };
     },
 };
@@ -236,7 +204,6 @@ export default {
                 </template>
                 <div class="item-content">
                     <div class="itemName">{{ resp.school }}</div>
-                    <el-button v-if="!resp.school" type="primary" @click="openSchool('school')">Add</el-button>
                 </div>
             </el-descriptions-item>
 
